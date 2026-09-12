@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.skill-check/
+.DS_Store
+Thumbs.db
+.venv/
+venv/

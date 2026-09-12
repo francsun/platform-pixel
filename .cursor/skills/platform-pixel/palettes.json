@@ -1,0 +1,37 @@
+{
+  "note": "Role hexes for chunky 3x3 and tiny 1x3 seeds. ink is shared. tufted / grass / snow add deep.",
+  "palettes": {
+    "clay": {
+      "ink": "#110A03",
+      "hi": "#F5B97D",
+      "mid": "#CA7538",
+      "shadow": "#853E33"
+    },
+    "stone": {
+      "ink": "#110A03",
+      "hi": "#B0A28D",
+      "mid": "#6D5D5B",
+      "shadow": "#3E3030"
+    },
+    "coral": {
+      "ink": "#110A03",
+      "hi": "#F5B97D",
+      "mid": "#DB6E53",
+      "shadow": "#853E33"
+    },
+    "grass": {
+      "ink": "#110A03",
+      "hi": "#D3E549",
+      "mid": "#59B32D",
+      "shadow": "#156948",
+      "deep": "#0E353E"
+    },
+    "snow": {
+      "ink": "#110A03",
+      "hi": "#F2F6FA",
+      "mid": "#7A96AA",
+      "shadow": "#3A5366",
+      "deep": "#14242E"
+    }
+  }
+}

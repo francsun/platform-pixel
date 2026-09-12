@@ -1,0 +1,280 @@
+{
+  "name": "snow",
+  "cell": 16,
+  "shape": "both",
+  "family": "all",
+  "anchor": "both",
+  "outline": "both",
+  "palette": "snow",
+  "colors": {
+    "ink": "#110A03",
+    "hi": "#F2F6FA",
+    "mid": "#7A96AA",
+    "shadow": "#3A5366",
+    "deep": "#14242E"
+  },
+  "atlas": {
+    "width": 240,
+    "height": 112,
+    "gutter_cells": 1,
+    "gutter_px": 16,
+    "layout": [
+      {
+        "id": "chunky-block-ink",
+        "family": "chunky",
+        "shape": "block",
+        "outline": "ink",
+        "anchor": null,
+        "seed": "platform01",
+        "cell": [
+          0,
+          0,
+          3,
+          3
+        ]
+      },
+      {
+        "id": "chunky-tufted-ink",
+        "family": "chunky",
+        "shape": "tufted",
+        "outline": "ink",
+        "anchor": null,
+        "seed": "platform04",
+        "cell": [
+          4,
+          0,
+          3,
+          3
+        ]
+      },
+      {
+        "id": "chunky-block-fill",
+        "family": "chunky",
+        "shape": "block",
+        "outline": "fill",
+        "anchor": null,
+        "seed": "platform01",
+        "cell": [
+          8,
+          0,
+          3,
+          3
+        ]
+      },
+      {
+        "id": "chunky-tufted-fill",
+        "family": "chunky",
+        "shape": "tufted",
+        "outline": "fill",
+        "anchor": null,
+        "seed": "platform04",
+        "cell": [
+          12,
+          0,
+          3,
+          3
+        ]
+      },
+      {
+        "id": "tiny-block-high-ink",
+        "family": "tiny",
+        "shape": "block",
+        "outline": "ink",
+        "anchor": "high",
+        "seed": "platform_tiny_02",
+        "cell": [
+          0,
+          4,
+          3,
+          1
+        ]
+      },
+      {
+        "id": "tiny-tufted-high-ink",
+        "family": "tiny",
+        "shape": "tufted",
+        "outline": "ink",
+        "anchor": "high",
+        "seed": "platform_tiny_04",
+        "cell": [
+          4,
+          4,
+          3,
+          1
+        ]
+      },
+      {
+        "id": "tiny-block-high-fill",
+        "family": "tiny",
+        "shape": "block",
+        "outline": "fill",
+        "anchor": "high",
+        "seed": "platform_tiny_02",
+        "cell": [
+          8,
+          4,
+          3,
+          1
+        ]
+      },
+      {
+        "id": "tiny-tufted-high-fill",
+        "family": "tiny",
+        "shape": "tufted",
+        "outline": "fill",
+        "anchor": "high",
+        "seed": "platform_tiny_04",
+        "cell": [
+          12,
+          4,
+          3,
+          1
+        ]
+      },
+      {
+        "id": "tiny-block-low-ink",
+        "family": "tiny",
+        "shape": "block",
+        "outline": "ink",
+        "anchor": "low",
+        "seed": "platform_tiny_01",
+        "cell": [
+          0,
+          6,
+          3,
+          1
+        ]
+      },
+      {
+        "id": "tiny-tufted-low-ink",
+        "family": "tiny",
+        "shape": "tufted",
+        "outline": "ink",
+        "anchor": "low",
+        "seed": "platform_tiny_03",
+        "cell": [
+          4,
+          6,
+          3,
+          1
+        ]
+      },
+      {
+        "id": "tiny-block-low-fill",
+        "family": "tiny",
+        "shape": "block",
+        "outline": "fill",
+        "anchor": "low",
+        "seed": "platform_tiny_01",
+        "cell": [
+          8,
+          6,
+          3,
+          1
+        ]
+      },
+      {
+        "id": "tiny-tufted-low-fill",
+        "family": "tiny",
+        "shape": "tufted",
+        "outline": "fill",
+        "anchor": "low",
+        "seed": "platform_tiny_03",
+        "cell": [
+          12,
+          6,
+          3,
+          1
+        ]
+      }
+    ]
+  },
+  "extend": {
+    "chunky_corners_only": [
+      "01",
+      "03",
+      "07",
+      "09"
+    ],
+    "chunky_horizontal": [
+      "02",
+      "05",
+      "08"
+    ],
+    "chunky_vertical": [
+      "04",
+      "05",
+      "06"
+    ],
+    "tiny_caps_only": [
+      "01",
+      "03"
+    ],
+    "tiny_horizontal": [
+      "02"
+    ]
+  },
+  "outputs": {
+    "atlas": "examples/snow/snow.png",
+    "chunky-block-ink_01": "examples/snow/tiles/snow_block_ink_01.png",
+    "chunky-block-ink_02": "examples/snow/tiles/snow_block_ink_02.png",
+    "chunky-block-ink_03": "examples/snow/tiles/snow_block_ink_03.png",
+    "chunky-block-ink_04": "examples/snow/tiles/snow_block_ink_04.png",
+    "chunky-block-ink_05": "examples/snow/tiles/snow_block_ink_05.png",
+    "chunky-block-ink_06": "examples/snow/tiles/snow_block_ink_06.png",
+    "chunky-block-ink_07": "examples/snow/tiles/snow_block_ink_07.png",
+    "chunky-block-ink_08": "examples/snow/tiles/snow_block_ink_08.png",
+    "chunky-block-ink_09": "examples/snow/tiles/snow_block_ink_09.png",
+    "chunky-tufted-ink_01": "examples/snow/tiles/snow_tufted_ink_01.png",
+    "chunky-tufted-ink_02": "examples/snow/tiles/snow_tufted_ink_02.png",
+    "chunky-tufted-ink_03": "examples/snow/tiles/snow_tufted_ink_03.png",
+    "chunky-tufted-ink_04": "examples/snow/tiles/snow_tufted_ink_04.png",
+    "chunky-tufted-ink_05": "examples/snow/tiles/snow_tufted_ink_05.png",
+    "chunky-tufted-ink_06": "examples/snow/tiles/snow_tufted_ink_06.png",
+    "chunky-tufted-ink_07": "examples/snow/tiles/snow_tufted_ink_07.png",
+    "chunky-tufted-ink_08": "examples/snow/tiles/snow_tufted_ink_08.png",
+    "chunky-tufted-ink_09": "examples/snow/tiles/snow_tufted_ink_09.png",
+    "chunky-block-fill_01": "examples/snow/tiles/snow_block_fill_01.png",
+    "chunky-block-fill_02": "examples/snow/tiles/snow_block_fill_02.png",
+    "chunky-block-fill_03": "examples/snow/tiles/snow_block_fill_03.png",
+    "chunky-block-fill_04": "examples/snow/tiles/snow_block_fill_04.png",
+    "chunky-block-fill_05": "examples/snow/tiles/snow_block_fill_05.png",
+    "chunky-block-fill_06": "examples/snow/tiles/snow_block_fill_06.png",
+    "chunky-block-fill_07": "examples/snow/tiles/snow_block_fill_07.png",
+    "chunky-block-fill_08": "examples/snow/tiles/snow_block_fill_08.png",
+    "chunky-block-fill_09": "examples/snow/tiles/snow_block_fill_09.png",
+    "chunky-tufted-fill_01": "examples/snow/tiles/snow_tufted_fill_01.png",
+    "chunky-tufted-fill_02": "examples/snow/tiles/snow_tufted_fill_02.png",
+    "chunky-tufted-fill_03": "examples/snow/tiles/snow_tufted_fill_03.png",
+    "chunky-tufted-fill_04": "examples/snow/tiles/snow_tufted_fill_04.png",
+    "chunky-tufted-fill_05": "examples/snow/tiles/snow_tufted_fill_05.png",
+    "chunky-tufted-fill_06": "examples/snow/tiles/snow_tufted_fill_06.png",
+    "chunky-tufted-fill_07": "examples/snow/tiles/snow_tufted_fill_07.png",
+    "chunky-tufted-fill_08": "examples/snow/tiles/snow_tufted_fill_08.png",
+    "chunky-tufted-fill_09": "examples/snow/tiles/snow_tufted_fill_09.png",
+    "tiny-block-high-ink_01": "examples/snow/tiles_tiny/snow_block_ink_high_01.png",
+    "tiny-block-high-ink_02": "examples/snow/tiles_tiny/snow_block_ink_high_02.png",
+    "tiny-block-high-ink_03": "examples/snow/tiles_tiny/snow_block_ink_high_03.png",
+    "tiny-tufted-high-ink_01": "examples/snow/tiles_tiny/snow_tufted_ink_high_01.png",
+    "tiny-tufted-high-ink_02": "examples/snow/tiles_tiny/snow_tufted_ink_high_02.png",
+    "tiny-tufted-high-ink_03": "examples/snow/tiles_tiny/snow_tufted_ink_high_03.png",
+    "tiny-block-high-fill_01": "examples/snow/tiles_tiny/snow_block_fill_high_01.png",
+    "tiny-block-high-fill_02": "examples/snow/tiles_tiny/snow_block_fill_high_02.png",
+    "tiny-block-high-fill_03": "examples/snow/tiles_tiny/snow_block_fill_high_03.png",
+    "tiny-tufted-high-fill_01": "examples/snow/tiles_tiny/snow_tufted_fill_high_01.png",
+    "tiny-tufted-high-fill_02": "examples/snow/tiles_tiny/snow_tufted_fill_high_02.png",
+    "tiny-tufted-high-fill_03": "examples/snow/tiles_tiny/snow_tufted_fill_high_03.png",
+    "tiny-block-low-ink_01": "examples/snow/tiles_tiny/snow_block_ink_low_01.png",
+    "tiny-block-low-ink_02": "examples/snow/tiles_tiny/snow_block_ink_low_02.png",
+    "tiny-block-low-ink_03": "examples/snow/tiles_tiny/snow_block_ink_low_03.png",
+    "tiny-tufted-low-ink_01": "examples/snow/tiles_tiny/snow_tufted_ink_low_01.png",
+    "tiny-tufted-low-ink_02": "examples/snow/tiles_tiny/snow_tufted_ink_low_02.png",
+    "tiny-tufted-low-ink_03": "examples/snow/tiles_tiny/snow_tufted_ink_low_03.png",
+    "tiny-block-low-fill_01": "examples/snow/tiles_tiny/snow_block_fill_low_01.png",
+    "tiny-block-low-fill_02": "examples/snow/tiles_tiny/snow_block_fill_low_02.png",
+    "tiny-block-low-fill_03": "examples/snow/tiles_tiny/snow_block_fill_low_03.png",
+    "tiny-tufted-low-fill_01": "examples/snow/tiles_tiny/snow_tufted_fill_low_01.png",
+    "tiny-tufted-low-fill_02": "examples/snow/tiles_tiny/snow_tufted_fill_low_02.png",
+    "tiny-tufted-low-fill_03": "examples/snow/tiles_tiny/snow_tufted_fill_low_03.png"
+  }
+}
