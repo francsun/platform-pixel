@@ -1,4 +1,6 @@
-# 16×16 platform grammar
+# Platform grammar
+
+Seeds are 16×16. Delivery may be 16, 32, or 64 via nearest integer scale.
 
 Two families. Same ink / hi / mid / shadow (/ deep) remap. Seeds in `tileset-training/`.
 
@@ -44,9 +46,9 @@ Do not require a full 16px side ink column on caps (rounded ends). Require the w
 
 ## Atlas (one resource PNG)
 
-All selected families go on **one** image. Grid is 16×16. Not a level.
+All selected families go on **one** image. Grid is the output cell (`--cell 16|32|64`). Not a level.
 
-Default pack (`family=all`, `shape=both`, `outline=both`): **flat and wavy undersides**, each with **black rim and inner-color rim**. One empty 16×16 cell between distinct platforms.
+Default pack (`family=all`, `shape=both`, `outline=both`): **flat and wavy undersides**, each with **black rim and inner-color rim**. One empty output cell between distinct platforms.
 
 ```text
 row 0-2  chunky block ink | gap | chunky tufted ink | gap | chunky block fill | gap | chunky tufted fill
@@ -56,9 +58,11 @@ row 5    empty
 row 6    tiny low  ink block/tufted | gap | tiny low  fill block/tufted
 ```
 
-Sheet is 15×7 cells = 240×112. Gutters stay fully transparent. `fill` covers the outer black edge with the inner band (`hi` on the walk line, `shadow` on the underside).
+Sheet is 15×7 cells = 240×112 at `--cell 16` (480×224 at `32`, 960×448 at `64`). Gutters stay fully transparent. `fill` covers the outer black edge with the inner band (`hi` on the walk line, `shadow` on the underside).
 
 ## Cell
 
-- 16×16 PNG, RGBA, nearest, no AA
+- Seeds: 16×16 PNG, RGBA. Remap and QA always run at 16.
+- Delivery: `--cell 16` (default), `32` (`NEAREST` ×2), or `64` (`NEAREST` ×4). Same pixels, larger squares. Not a new silhouette.
+- No Lanczos, bilinear, or bbox-fit.
 - Typical 4 opaque colors; `tufted` may add `deep`

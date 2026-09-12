@@ -1,6 +1,9 @@
 {
   "name": "snow",
   "cell": 16,
+  "source_cell": 16,
+  "scale": 1,
+  "resample": "nearest",
   "shape": "both",
   "family": "all",
   "anchor": "both",

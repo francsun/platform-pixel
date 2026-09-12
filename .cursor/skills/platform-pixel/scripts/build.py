@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """16x16 platform tiles: remap chunky 3x3 and tiny 1x3 seeds onto one atlas.
 
-Never resample. Never emit a level.
+Seeds and QA stay 16x16. --cell 32/64 is nearest integer scale only.
+Never Lanczos. Never emit a level.
 """
 from __future__ import annotations
 
@@ -15,7 +16,8 @@ from pathlib import Path
 from PIL import Image
 
 CELL = 16
-GUTTER_CELLS = 1  # one empty 16×16 cell between distinct platforms
+ALLOWED_CELLS = (16, 32, 64)
+GUTTER_CELLS = 1  # one empty output cell between distinct platforms
 CHUNKY_SLOTS = tuple(range(1, 10))
 TINY_SLOTS = tuple(range(1, 4))
 OPAQUE_MIN = 16
@@ -46,6 +48,18 @@ def parse_hex(value: str) -> tuple[int, int, int]:
 
 def hex_rgb(rgb: tuple[int, int, int]) -> str:
     return "#%02X%02X%02X" % rgb
+
+
+def nn_integer(im: Image.Image, scale: int) -> Image.Image:
+    if scale < 1 or int(scale) != scale:
+        raise SystemExit("only positive integer nearest-neighbor scale is allowed")
+    if scale == 1:
+        return im.copy()
+    return im.resize((im.width * scale, im.height * scale), Image.NEAREST)
+
+
+def scale_tiles(tiles: dict[int, Image.Image], scale: int) -> dict[int, Image.Image]:
+    return {slot: nn_integer(im, scale) for slot, im in tiles.items()}
 
 
 def luma(rgb: tuple[int, int, int]) -> float:
@@ -359,16 +373,25 @@ def remap_group(
     return {slot: remap_image(im, mapping) for slot, im in tiles.items()}
 
 
-def paste_group(atlas: Image.Image, tiles: dict[int, Image.Image], col0: int, row0: int, cols: int) -> None:
+def paste_group(
+    atlas: Image.Image,
+    tiles: dict[int, Image.Image],
+    col0: int,
+    row0: int,
+    cols: int,
+    cell: int,
+) -> None:
     for slot, im in tiles.items():
+        if im.size != (cell, cell):
+            raise SystemExit(f"tile _{slot:02d} is {im.size}, want {cell}x{cell}")
         idx = slot - 1
-        x = (col0 + idx % cols) * CELL
-        y = (row0 + idx // cols) * CELL
+        x = (col0 + idx % cols) * cell
+        y = (row0 + idx // cols) * cell
         atlas.paste(im, (x, y))
 
 
 def pack_bands(bands: list[list[dict]]) -> list[dict]:
-    """Place platform groups with one 16x16 empty cell between them."""
+    """Place platform groups with one empty output cell between them."""
     placed: list[dict] = []
     row = 0
     for band in bands:
@@ -429,6 +452,10 @@ def cmd_build(args: argparse.Namespace) -> int:
     families = selected_families(args.family)
     anchors = selected_anchors(args.anchor)
     outlines = selected_outlines(args.outline)
+    out_cell = args.cell
+    if out_cell not in ALLOWED_CELLS:
+        raise SystemExit("--cell must be 16, 32, or 64")
+    scale = out_cell // CELL
 
     bands: list[list[dict]] = []
     if "chunky" in families:
@@ -447,7 +474,7 @@ def cmd_build(args: argparse.Namespace) -> int:
                         "family": "chunky",
                         "shape": shape,
                         "outline": outline,
-                        "tiles": tiles,
+                        "tiles": scale_tiles(tiles, scale),
                         "cols": 3,
                         "rows": 3,
                         "seed": prefix,
@@ -472,7 +499,7 @@ def cmd_build(args: argparse.Namespace) -> int:
                             "shape": shape,
                             "anchor": anchor,
                             "outline": outline,
-                            "tiles": tiles,
+                            "tiles": scale_tiles(tiles, scale),
                             "cols": 3,
                             "rows": 1,
                             "seed": prefix,
@@ -486,9 +513,9 @@ def cmd_build(args: argparse.Namespace) -> int:
 
     max_col = max(g["col"] + g["cols"] for g in groups)
     max_row = max(g["row"] + g["rows"] for g in groups)
-    atlas = Image.new("RGBA", (max_col * CELL, max_row * CELL), (0, 0, 0, 0))
+    atlas = Image.new("RGBA", (max_col * out_cell, max_row * out_cell), (0, 0, 0, 0))
     for g in groups:
-        paste_group(atlas, g["tiles"], g["col"], g["row"], g["cols"])
+        paste_group(atlas, g["tiles"], g["col"], g["row"], g["cols"], out_cell)
 
     out_dir = args.out.resolve()
     name = args.name or out_dir.name
@@ -530,7 +557,10 @@ def cmd_build(args: argparse.Namespace) -> int:
 
     manifest = {
         "name": name,
-        "cell": CELL,
+        "cell": out_cell,
+        "source_cell": CELL,
+        "scale": scale,
+        "resample": "nearest",
         "shape": args.shape,
         "family": args.family,
         "anchor": args.anchor,
@@ -541,7 +571,7 @@ def cmd_build(args: argparse.Namespace) -> int:
             "width": atlas.width,
             "height": atlas.height,
             "gutter_cells": GUTTER_CELLS,
-            "gutter_px": GUTTER_CELLS * CELL,
+            "gutter_px": GUTTER_CELLS * out_cell,
             "layout": layout,
         },
         "extend": {
@@ -563,7 +593,9 @@ def cmd_build(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(description="Remap 16x16 platform seeds into an atlas")
+    p = argparse.ArgumentParser(
+        description="Remap 16x16 platform seeds into an atlas (optional nearest 32/64)"
+    )
     p.add_argument("--shape", default="both", help="block|tufted|both (default both: flat + wavy underside)")
     p.add_argument("--palette", required=True, help="named palette or custom")
     p.add_argument("--out", type=Path, required=True)
@@ -571,6 +603,13 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--family", default="all", help="chunky|tiny|all (default all)")
     p.add_argument("--anchor", default="both", help="high|low|both for tiny (default both)")
     p.add_argument("--outline", default="both", help="ink|fill|both (default both: black edge + inner-color edge)")
+    p.add_argument(
+        "--cell",
+        type=int,
+        default=16,
+        choices=list(ALLOWED_CELLS),
+        help="output cell 16, 32, or 64 (32/64 = nearest x2/x4 of 16 seeds)",
+    )
     p.add_argument("--repo", type=Path)
     p.add_argument("--ink")
     p.add_argument("--hi")

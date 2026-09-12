@@ -4,7 +4,7 @@ An agent skill for [Cursor](https://cursor.com) and other tools that load `SKILL
 
 ## Example: snow
 
-[`examples/snow/`](examples/snow/) is a winter kit (icy highlight / packed snow / cold shadow). Default build packs thick 3×3 and thin 1×3 platforms, flat and wavy undersides, black rims and inner-color rims, with a 16×16 empty cell between groups.
+[`examples/snow/`](examples/snow/) is a winter kit (icy highlight / packed snow / cold shadow). Default build packs thick 3×3 and thin 1×3 platforms, flat and wavy undersides, black rims and inner-color rims, with one empty cell between groups.
 
 ![Snow platform atlas](examples/snow/snow.png)
 
@@ -13,6 +13,21 @@ Rebuild it:
 ```bash
 python .cursor/skills/platform-pixel/scripts/build.py --palette snow --out examples/snow
 ```
+
+## 16 / 32 / 64 cells
+
+Seeds and QA stay **16×16**. `--cell 32` and `--cell 64` nearest-neighbor scale after QA (`×2` / `×4`, `Image.NEAREST` only). Each source pixel becomes a 2×2 or 4×4 block. That is the same silhouette with fatter pixels — not a native 32/64 redraw, and not Lanczos / bilinear / bbox-fit.
+
+Gutter is still **one output cell** (16, 32, or 64 px). Put 32/64 kits in their own `--out` folder so they do not mix with 16px slices.
+
+```bash
+python .cursor/skills/platform-pixel/scripts/build.py --palette snow --cell 32 --out examples/snow-32
+python .cursor/skills/platform-pixel/scripts/build.py --palette snow --cell 64 --out examples/snow-64
+```
+
+Atlas size at the default 15×7 pack: 240×112 (`16`), 480×224 (`32`), 960×448 (`64`). The JSON records `cell`, `source_cell: 16`, `scale`, and `resample: nearest`.
+
+![Snow atlas at 32px (nearest ×2)](examples/snow/snow-32.png)
 
 ## Install
 
@@ -35,12 +50,12 @@ Keep this clone on disk. The script looks for `tileset-training/` here (or `PLAT
 
 | File | |
 |---|---|
-| `{name}.png` | Atlas on a 16×16 grid (default 240×112) |
+| `{name}.png` | Atlas on the output cell grid (default 240×112 at `--cell 16`) |
 | `tiles/*.png` | Chunky 3×3 slices |
 | `tiles_tiny/*.png` | Tiny 1×3 slices |
-| `{name}.json` | Palette, layout, slot roles |
+| `{name}.json` | Palette, layout, `cell` / `source_cell` / `scale` / `resample` |
 
-Defaults: `--shape both` (flat + wavy), `--outline both` (ink rim + fill rim), `--family all` (chunky + tiny).
+Defaults: `--shape both` (flat + wavy), `--outline both` (ink rim + fill rim), `--family all` (chunky + tiny), `--cell 16`.
 
 ## Seeds
 
